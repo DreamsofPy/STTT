@@ -1,0 +1,22 @@
+{
+  "name": "STTT",
+  "version": "0.0.1",
+  "description": "Super Tic Tac Toe",
+  "dependencies": {
+    "socket.io" : "latest",
+    "express"   : "latest",
+    "jade"      : "latest",
+    "nodemon"   : "latest"
+  },
+  "contributors" : [
+    {
+      "name" : "Deepak",
+      "github" : "http://github.com/deepakvenkat"
+    },
+    {
+      "name" : "Keerthi",
+      "github" : "http://github.com/Yeshwanthyk"
+    }
+  ]
+
+}
