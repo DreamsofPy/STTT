@@ -7,6 +7,7 @@ var port = 3700;
 app.set('views', __dirname + '/templates');
 app.set('view engine', "jade");
 app.engine("jade", require("jade").__express);
+app.use(express.static(__dirname + '/public'))
 var httpServer = http.createServer(app).listen(port, function () {
   console.log("Listening on port" + port);
 });
@@ -14,5 +15,5 @@ var httpServer = http.createServer(app).listen(port, function () {
 /*  ROUTES */
 
 app.get('/', function (req, res) {
-  res.send("Super Tic Tac Toe");
+  res.render("game")
 });
