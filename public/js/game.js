@@ -5,4 +5,8 @@ window.onload = function () {
   socket.on("message", function (data) {
     console.log(data.message);
   });
-}
+
+  $(".stBlock").click(function (evt){
+    console.log(evt.target.id);
+  });
+};
