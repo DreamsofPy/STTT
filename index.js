@@ -16,12 +16,37 @@ var httpServer = http.createServer(app).listen(port, function () {
 });
 
 var io = socketio.listen(httpServer);
+
+var game = {};
+var turn = "x";
+
+/* Socket Handlers */
 io.sockets.on("connection", function (socket) {
+
   console.log("socket established connections");
   socket.emit("message", {message: "welcome to the game"});
+  socket.on("makeMove", function (data) {
+    console.log(data);
+    var valid = validateMove(data, game, turn);
+    if (valid) {
+      turn = (turn === "x") ? "o" : "x";
+      game[data.block] = data.player;
+    }
+    io.sockets.emit("moveResult", { valid: valid, player: data.player, block: data.block, win: false});
+  });
 });
+
 /*  ROUTES */
 
 app.get('/', function (req, res) {
   res.render("game");
 });
+
+/* Game Logic */
+function validateMove(data, game, turn) {
+  if (data.player !== turn)
+    return false;
+  if(game.hasOwnProperty(data.block))
+    return false;
+  return true;
+}
