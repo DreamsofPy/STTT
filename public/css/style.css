@@ -1,6 +1,11 @@
+.sttt{
+  table-layout: fixed;
+}
 .stBlock{
   border-color: #000 !important;
   border-width: 2px !important;
   border-style: solid !important;
+  text-align: center;
   height: 40px;
+  width: 33%;
 }
