@@ -2,7 +2,7 @@ var express = require("express");
 var http = require("http");
 var _ = require("underscore");
 var socketio = require("socket.io");
-
+var shortId = require("shortid");
 var app = express();
 var port = 3700;
 
@@ -39,7 +39,12 @@ io.sockets.on("connection", function (socket) {
 /*  ROUTES */
 
 app.get('/', function (req, res) {
-  res.render("game");
+  var gameId = shortId.generate();
+  res.render("landing", {id: gameId});
+});
+
+app.get('/game/:gameid', function (req, res) {
+  res.send("in game");
 });
 
 /* Game Logic */
