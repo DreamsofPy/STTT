@@ -7,7 +7,9 @@
     "express"   : "latest",
     "jade"      : "latest",
     "nodemon"   : "latest",
-    "underscore" : "latest"
+    "underscore" : "latest",
+    "shortid"   : "latest",
+    "express-namespace" : "latest"
   },
   "contributors" : [
     {

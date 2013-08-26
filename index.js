@@ -44,7 +44,7 @@ app.get('/', function (req, res) {
 });
 
 app.get('/game/:gameid', function (req, res) {
-  res.send("in game");
+  res.render("game")
 });
 
 /* Game Logic */
