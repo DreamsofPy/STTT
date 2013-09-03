@@ -44,7 +44,14 @@ app.get('/', function (req, res) {
 });
 
 app.get('/game/:gameid', function (req, res) {
-  res.render("game")
+  var gameId = req.params.gameid;
+  var playerId = "o";
+  if (!game[gameId]) {
+    playerId = "x";
+    game[gameId] = {};
+    game[turn] = "x";
+  }
+  res.render("game", {player: playerId});
 });
 
 /* Game Logic */
