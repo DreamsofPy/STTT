@@ -27,10 +27,13 @@ io.sockets.on("connection", function (socket) {
   socket.emit("message", {message: "welcome to the game"});
   socket.on("makeMove", function (data) {
     console.log(data);
-    var valid = validateMove(data, game, turn);
+    var currentGame = game[data.gameId];
+    console.log(currentGame);
+    var currentTurn = currentGame.turn;
+    var valid = validateMove(data, currentGame, currentTurn);
     if (valid) {
-      turn = (turn === "x") ? "o" : "x";
-      game[data.block] = data.player;
+      game[data.gameId].turn = (currentTurn === "x") ? "o" : "x";
+      game[data.gameId][data.block] = data.player;
     }
     io.sockets.emit("moveResult", { valid: valid, player: data.player, block: data.block, win: false});
   });
@@ -49,9 +52,9 @@ app.get('/game/:gameid', function (req, res) {
   if (!game[gameId]) {
     playerId = "x";
     game[gameId] = {};
-    game[turn] = "x";
+    game[gameId]["turn"] = "x";
   }
-  res.render("game", {player: playerId});
+  res.render("game", {player: playerId, gameId: gameId});
 });
 
 /* Game Logic */

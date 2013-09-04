@@ -6,7 +6,7 @@ block mainContent
       h3.text-muted Game on
       .row
         .col-md-4.col-md-offset-4
-          table.table.sttt
+          table.table.sttt(id = gameId)
             tr
               td#A1.stBlock
               td#A2.stBlock
@@ -22,8 +22,8 @@ block mainContent
           select.form-control#playerMarker(disabled = true)
             option#x(selected = player === "x") X
             option#o(selected = player === "o") O
-          h4.label.label-primary Next Move by player :
-            span.player &nbsp X
+          h4.label.label-primary Next Move by player :&nbsp
+            span.turn X
 
 
 
