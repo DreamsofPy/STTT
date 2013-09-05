@@ -46,15 +46,17 @@ app.get('/', function (req, res) {
   res.render("landing", {id: gameId});
 });
 
-app.get('/game/:gameid', function (req, res) {
+app.get('/game/:gameType/:gameid', function (req, res) {
   var gameId = req.params.gameid;
+  var gameType = req.params.gameType;
   var playerId = "o";
   if (!game[gameId]) {
     playerId = "x";
     game[gameId] = {};
-    game[gameId]["turn"] = "x";
+    game[gameId].turn = "x";
+    game[gameId].gameType = req.params.gameType;
   }
-  res.render("game", {player: playerId, gameId: gameId});
+  res.render("game", {player: playerId, gameId: gameId, gameType: gameType});
 });
 
 /* Game Logic */
