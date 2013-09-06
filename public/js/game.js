@@ -14,6 +14,14 @@ window.onload = function () {
   });
 
   socket.on("moveResult", function (data) {
+    var result = "Game Drawn!!";
+    if(data.end) {
+      if (!!data.winner) {
+        result = "Player" + data.winner + " wins. Congratulations!!";
+      }
+      $(".game-result").html(result);
+      $("#winModal").modal();
+    }
     if(data.valid) {
       var img = document.createElement("img");
       var imgSrc = "/img/" + data.player + "-24.png";

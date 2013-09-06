@@ -28,14 +28,13 @@ io.sockets.on("connection", function (socket) {
   socket.on("makeMove", function (data) {
     console.log(data);
     var currentGame = game[data.gameId];
-    console.log(currentGame);
     var currentTurn = currentGame.turn;
     var valid = validateMove(data, currentGame, currentTurn);
     if (valid) {
       game[data.gameId].turn = (currentTurn === "x") ? "o" : "x";
       game[data.gameId][data.block] = data.player;
     }
-    io.sockets.emit("moveResult", { valid: valid, player: data.player, block: data.block, win: false});
+    io.sockets.emit("moveResult", { valid: valid, player: data.player, block: data.block, end: false, winner: null});
   });
 });
 
