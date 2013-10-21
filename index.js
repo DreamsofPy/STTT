@@ -20,6 +20,8 @@ var io = socketio.listen(httpServer);
 var game = {};
 var turn = "x";
 
+var gameMoves = [];
+
 /* Socket Handlers */
 io.sockets.on("connection", function (socket) {
 
@@ -32,9 +34,10 @@ io.sockets.on("connection", function (socket) {
     var valid = validateMove(data, currentGame, currentTurn);
     if (valid) {
       game[data.gameId].turn = (currentTurn === "x") ? "o" : "x";
-      game[data.gameId][data.block] = data.player;
+      storeMove(data);
     }
-    io.sockets.emit("moveResult", { valid: valid, player: data.player, block: data.block, end: false, winner: null});
+    var end = didGameEnd(currentGame, currentTurn);
+    io.sockets.emit("moveResult", { valid: valid, player: data.player, block: data.block, table: data.table, end: false, winner: null});
   });
 });
 
@@ -54,6 +57,7 @@ app.get('/game/:gameType/:gameid', function (req, res) {
     game[gameId] = {};
     game[gameId].turn = "x";
     game[gameId].gameType = req.params.gameType;
+    game[gameId].moves = [];
   }
   res.render("game", {player: playerId, gameId: gameId, gameType: gameType});
 });
@@ -62,7 +66,21 @@ app.get('/game/:gameType/:gameid', function (req, res) {
 function validateMove(data, game, turn) {
   if (data.player !== turn)
     return false;
-  if(game.hasOwnProperty(data.block))
+  if(!!game[id].moves[table] && !!game[id].moves[table][block])
     return false;
   return true;
+}
+
+
+function storeMove (data) {
+  var table = data.table;
+  var block = data.block;
+  var id = data.gameId;
+  if (!game[id].moves[table]) game[id].moves[table] = [];
+  game[id].moves[table][block] = data.player;
+  return;
+}
+
+function didGameEnd (game, turn) {
+  return false;
 }
